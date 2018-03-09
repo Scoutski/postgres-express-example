@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const controller = require('../controllers/todo')
+const controller = require('../controllers/todo');
 
 // Every route in this file is
 // automatically nested under /todo
@@ -13,6 +13,21 @@ todoRouter.get('', async (req, res) => {
   });
 });
 
+todoRouter.get('/:id', async (req, res) => {
+  const result = await controller.get(req.params.id);
+  if (result === null) {
+    res.status(404).json({
+      result: null,
+      errors: `Record with id: ${req.params.id} not found.`
+    })
+  } else {
+    res.status(200).json({
+      result,
+      errors: null
+    })
+  }
+});
+
 todoRouter.post('', async (req, res) => {
   if (!req.body.label) {
     res.status(400).json({
@@ -21,7 +36,6 @@ todoRouter.post('', async (req, res) => {
     });
   } else {
     const result = await controller.create(req.body);
-    console.log('todo created!', result.toJSON());
     res.status(201).json({
       result,
       errors: null
@@ -30,7 +44,27 @@ todoRouter.post('', async (req, res) => {
 });
 
 todoRouter.patch('/:id', async (req, res) => {
+  const keys = Object.keys(req.body)
+  if (!keys.includes('label') && !keys.includes('complete')) {
+    res.status(400).json({
+      result: null,
+      errors: 'Requires label or complete parameter to create new Todo.'
+    });
+  } else {
+    const result = await controller.update(req.params.id, req.body);
+    res.status(201).json({
+      result,
+      errors: null
+    });
+  }
+});
 
+todoRouter.delete('/:id', async (req, res) => {
+  const result = await controller.destroy(req.params.id);
+  res.status(200).json({
+    result,
+    errors: null
+  });
 });
 
 module.exports = todoRouter;
