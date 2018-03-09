@@ -1,13 +1,23 @@
+// package requirements
 const express = require('express');
-const app = express();
+const bodyParser = require('body-parser');
 
+// relative requirements
+const todoRouter = require('./routes/todo');
+
+const app = express();
 const PORT = 3001;
+
+// parse incoming JSON requests
+app.use(bodyParser.json());
 
 // This route is used to confirm that your server
 // is running and the API responds correctly.
 app.get('/health', (req, res) => {
   res.send('OK');
 });
+
+app.use('/todo', todoRouter);
 
 app.listen(PORT, () => {
   console.log(`Server now running on port: ${PORT}`);
