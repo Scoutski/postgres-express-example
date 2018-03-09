@@ -22,3 +22,6 @@ app.use('/todo', todoRouter);
 app.listen(PORT, () => {
   console.log(`Server now running on port: ${PORT}`);
 });
+
+// exporting app for test usage
+module.exports = app;

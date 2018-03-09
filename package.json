@@ -5,16 +5,26 @@
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon ./src/index.js --config ./nodemon.json",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava | tap-spec"
   },
   "author": "",
   "license": "ISC",
+  "ava": {
+    "files": [
+      "test/*.js"
+    ],
+    "failWithoutAssertions": false,
+    "tap": true
+  },
   "dependencies": {
     "express": "^4.16.2",
     "pg": "^7.4.1",
     "sequelize": "^4.35.2"
   },
   "devDependencies": {
-    "nodemon": "^1.17.1"
+    "ava": "^0.25.0",
+    "nodemon": "^1.17.1",
+    "supertest": "^3.0.0",
+    "tap-spec": "^4.1.1"
   }
 }

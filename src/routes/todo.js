@@ -44,8 +44,7 @@ todoRouter.post('', async (req, res) => {
 });
 
 todoRouter.patch('/:id', async (req, res) => {
-  const keys = Object.keys(req.body)
-  if (!keys.includes('label') && !keys.includes('complete')) {
+  if (req.body.label === undefined && req.body.complete === undefined) {
     res.status(400).json({
       result: null,
       errors: 'Requires label or complete parameter to create new Todo.'
