@@ -1,6 +1,6 @@
 module.exports = {
   development: {
-    username: process.env.USER,
+    username: process.env.DB_USER,
     password: null,
     database: 'todo-example',
     host: '127.0.0.1',
@@ -10,7 +10,7 @@ module.exports = {
     operatorsAliases: false
   },
   test: {
-    username: process.env.USER,
+    username: process.env.DB_USER,
     password: null,
     database: 'todo-example-test',
     host: '127.0.0.1',

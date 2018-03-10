@@ -5,18 +5,20 @@
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon ./src/index.js --config ./nodemon.json",
-    "test": "ava | tap-spec"
+    "test": "ava --verbose | tap-spec"
   },
   "author": "",
   "license": "ISC",
   "ava": {
     "files": [
-      "test/*.js"
+      "test/*.js",
+      "test/*/*.js"
     ],
     "failWithoutAssertions": false,
     "tap": true
   },
   "dependencies": {
+    "dotenv": "^5.0.1",
     "express": "^4.16.2",
     "pg": "^7.4.1",
     "sequelize": "^4.35.2"
@@ -25,6 +27,7 @@
     "ava": "^0.25.0",
     "nodemon": "^1.17.1",
     "supertest": "^3.0.0",
-    "tap-spec": "^4.1.1"
+    "tap-spec": "^4.1.1",
+    "uuid": "^3.2.1"
   }
 }

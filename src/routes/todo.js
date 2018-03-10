@@ -6,9 +6,9 @@ const controller = require('../controllers/todo');
 const todoRouter = new Router();
 
 todoRouter.get('', async (req, res) => {
-  const result = await controller.getAll();
+  // const result = await controller.getAll();
   res.status(200).json({
-    result: result.map(r => r.toJSON()),
+    // result: result.map(r => r.toJSON()),
     errors: null
   });
 });

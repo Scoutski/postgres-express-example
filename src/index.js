@@ -1,3 +1,6 @@
+// environment variables in .env
+require('dotenv').config()
+
 // package requirements
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -6,7 +9,8 @@ const bodyParser = require('body-parser');
 const todoRouter = require('./routes/todo');
 
 const app = express();
-const PORT = 3001;
+const { NODE_ENV, PORT, TEST_PORT } = process.env;
+const port = NODE_ENV === 'test' ? TEST_PORT : PORT;
 
 // parse incoming JSON requests
 app.use(bodyParser.json());
@@ -19,8 +23,8 @@ app.get('/health', (req, res) => {
 
 app.use('/todo', todoRouter);
 
-app.listen(PORT, () => {
-  console.log(`Server now running on port: ${PORT}`);
+app.listen(port, () => {
+  console.log(`Server now running on port: ${port}`);
 });
 
 // exporting app for test usage
