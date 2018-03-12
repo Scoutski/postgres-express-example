@@ -1,6 +1,6 @@
 # posgtres-express-example
 
-![Build Status](https://travis-ci.org/Scoutski/postgres-express-example.svg?branch=master)
+![Build Status](https://travis-ci.org/Scoutski/postgres-express-example.svg?branch=master) [![Coverage Status](https://coveralls.io/repos/github/Scoutski/postgres-express-example/badge.svg)](https://coveralls.io/github/Scoutski/postgres-express-example)
 
 ## :orange_book: Description
 
