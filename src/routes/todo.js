@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const controller = require('../controllers/todo');
+const errors = require('../lib/errors');
 
 // Every route in this file is
 // automatically nested under /todo
@@ -18,7 +19,7 @@ todoRouter.get('/:id', async (req, res) => {
   if (result === null) {
     res.status(404).json({
       result: null,
-      errors: `Record with id: ${req.params.id} not found.`
+      errors: errors.todoNotFound(req.params.id)
     });
   } else {
     res.status(200).json({
@@ -32,7 +33,7 @@ todoRouter.post('', async (req, res) => {
   if (!req.body.label) {
     res.status(400).json({
       result: null,
-      errors: 'Requires label parameter to create new Todo.'
+      errors: errors.createRequiresParams()
     });
   } else {
     const result = await controller.create(req.body);
@@ -47,7 +48,7 @@ todoRouter.patch('/:id', async (req, res) => {
   if (req.body.label === undefined && req.body.complete === undefined) {
     res.status(400).json({
       result: null,
-      errors: 'Requires label or complete parameter to create new Todo.'
+      errors: errors.updateRequiredParams()
     });
   } else {
     const result = await controller.update(req.params.id, req.body);

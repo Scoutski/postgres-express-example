@@ -7,13 +7,12 @@ const getAll = () => {
 };
 
 const get = (id) => {
-  return Todo.findById(id);
+  return Todo
+    .findOne({ where: { id } });
 };
 
 const create = (body) => {
-  return Todo
-    .create({ label: body.label })
-    .catch(error => error);
+  return Todo.create({ label: body.label });
 };
 
 const update = async (id, body) => {
