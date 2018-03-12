@@ -6,9 +6,9 @@ const controller = require('../controllers/todo');
 const todoRouter = new Router();
 
 todoRouter.get('', async (req, res) => {
-  // const result = await controller.getAll();
+  const result = await controller.getAll();
   res.status(200).json({
-    // result: result.map(r => r.toJSON()),
+    result: result.map(r => r.toJSON()),
     errors: null
   });
 });
@@ -51,7 +51,7 @@ todoRouter.patch('/:id', async (req, res) => {
     });
   } else {
     const result = await controller.update(req.params.id, req.body);
-    res.status(201).json({
+    res.status(200).json({
       result,
       errors: null
     });

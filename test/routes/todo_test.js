@@ -1,6 +1,11 @@
 require('dotenv').config();
 
-const test = require('ava');
+// Need to figure out how to do the commonJS
+// version of this. I tried:
+// const test = require('ava').serial; but it
+// did not work as I expected.
+import { serial as test } from 'ava';
+const uuid = require('uuid');
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('supertest');
@@ -8,30 +13,65 @@ const Sequelize = require('sequelize');
 
 const app = require('../../src');
 app.use(bodyParser.json());
-// const app = express();
-const Todo = require('../../src/models/todo');
+const { Todo } = require('../../src/models');
+const todoController = require('../../src/controllers/todo');
 
-const port = process.env.TEST_PORT;
-
-// const agent = request.agent(app)
-
-// test.before(async () => {
-//   await Sequelize.sync({ force: true });
-// })
-
+// Integration tests below ==--------------------------------
 test('GET /todo', async t => {
   t.plan(2);
-  t.log(1);
-  // const todo = await Todo.create({ label: 'testyBoi' });
-  t.log('*****************')
-  // t.log('todo.toJSON():', todo.toJSON())
-  // const url = `http://localhost:${port}/todo`;
-  // t.log(url);
   const res = await request(app).get('/todo');
 
-  t.log(2);
-  t.log('res.status', res.status);
   t.is(res.status, 200);
-  t.log('res.body.errors', res.body.errors)
-  t.falsy(res.body.errors);
+  t.is(res.body.errors, null);
 });
+
+test('GET /todo/:id', async t => {
+  t.plan(3);
+
+  const todo = await Todo.create({ label: 'testLabel' });
+  t.not(todo, null);
+
+  const res = await request(app).get(`/todo/${todo.id}`);
+
+  t.is(res.status, 200);
+  t.is(res.body.result.id, todo.id);
+});
+
+test('POST /todo', async t => {
+  t.plan(2);
+
+  const label = uuid.v4();
+  const res = await request(app)
+    .post('/todo')
+    .send({ label });
+
+  t.is(res.status, 201);
+  t.is(res.body.result.label, label);
+});
+
+test('PATCH /todo/:id', async t => {
+  t.plan(3);
+
+  const todo = await Todo.create({ label: 'testLabel' });
+  t.is(todo.complete, false);
+
+  const res = await request(app)
+    .patch(`/todo/${todo.id}`)
+    .send({ complete: true });
+
+  t.is(res.status, 200);
+  t.is(res.body.result.complete, true);
+});
+
+test('DELETE /todo/:id', async t => {
+  t.plan(3);
+
+  const todo = await Todo.create({ label: 'testLabel' });
+  t.not(todo, null);
+
+  const res = await request(app).delete(`/todo/${todo.id}`);
+
+  t.is(res.status, 200);
+  t.is(res.body.result, 1);
+});
+// Integration tests above ---------------------------------
