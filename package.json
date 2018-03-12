@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "nodemon ./src/server.js --config ./nodemon.json",
-    "spec": "nyc ava | tap-spec",
+    "spec": "nyc ava",
     "test": "npm run pretest && npm run spec && npm run posttest",
     "pretest": "./node_modules/.bin/sequelize db:migrate --env test",
     "posttest": "./node_modules/.bin/sequelize db:migrate:undo:all --env test",
@@ -24,6 +24,12 @@
     ],
     "failWithoutAssertions": false,
     "tap": true
+  },
+  "nyc": {
+    "exclude": [
+      "src/models/*.js"
+    ],
+    "report-dir": "./coverage"
   },
   "dependencies": {
     "dotenv": "^5.0.1",
