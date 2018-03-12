@@ -5,7 +5,10 @@
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon ./src/index.js --config ./nodemon.json",
-    "test": "ava --verbose | tap-spec"
+    "spec": "ava --serial --verbose | tap-spec",
+    "test": "npm run pretest && npm run spec && npm run posttest",
+    "pretest": "sequelize db:migrate --env test",
+    "posttest": "sequelize db:migrate:undo:all --env test"
   },
   "author": "",
   "license": "ISC",
