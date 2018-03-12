@@ -1,16 +1,10 @@
 require('dotenv').config();
 
-// Need to figure out how to do the commonJS
-// version of this. I tried:
-// const test = require('ava').serial; but it
-// did not work as I expected.
-import { serial as test } from 'ava';
+const test = require('ava');
 const uuid = require('uuid');
-const bodyParser = require('body-parser');
-const request = require('supertest');
 
-const app = require('../../src');
-app.use(bodyParser.json());
+const request = require('supertest');
+const { app } = require('../_helper');
 const { Todo } = require('../../src/models');
 
 // Integration tests below ==--------------------------------

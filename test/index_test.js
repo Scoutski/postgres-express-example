@@ -1,14 +1,11 @@
 const test = require('ava');
 const request = require('supertest');
+const { app } = require('./_helper');
 
-// TODO: should I create a separate app for testing?
-const app = require('../src');
-
-test.serial('GET /health', async t => {
+test('GET /health', async t => {
   t.plan(2);
 
-  const res = await request(app)
-    .get('/health');
+  const res = await request(app).get('/health');
 
   t.is(res.status, 200);
   t.is(res.text, 'OK');
