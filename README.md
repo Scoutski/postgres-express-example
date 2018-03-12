@@ -1,5 +1,7 @@
 # posgtres-express-example
 
+![Build Status](https://travis-ci.org/Scoutski/postgres-express-example.svg?branch=master)
+
 ## :orange_book: Description
 
 Simple postgres + express example application for a todo list like API.

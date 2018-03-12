@@ -10,7 +10,7 @@ module.exports = {
     operatorsAliases: false
   },
   test: {
-    username: process.env.DB_USER,
+    username: 'postgres',
     password: null,
     database: 'todo-example-test',
     host: '127.0.0.1',
