@@ -4,13 +4,13 @@ const test = require('ava');
 const uuid = require('uuid');
 
 const request = require('supertest');
-const { app } = require('../_helper');
+const { makeApp } = require('../_helper');
 const { Todo } = require('../../src/models');
 
 // Integration tests below ==--------------------------------
 test('GET /todo', async t => {
   t.plan(2);
-  const res = await request(app).get('/todo');
+  const res = await request(makeApp()).get('/todo');
 
   t.is(res.status, 200);
   t.is(res.body.errors, null);
@@ -22,7 +22,7 @@ test('GET /todo/:id', async t => {
   const todo = await Todo.create({ label: 'testLabel' });
   t.not(todo, null);
 
-  const res = await request(app).get(`/todo/${todo.id}`);
+  const res = await request(makeApp()).get(`/todo/${todo.id}`);
 
   t.is(res.status, 200);
   t.is(res.body.result.id, todo.id);
@@ -32,7 +32,7 @@ test('POST /todo', async t => {
   t.plan(2);
 
   const label = uuid.v4();
-  const res = await request(app)
+  const res = await request(makeApp())
     .post('/todo')
     .send({ label });
 
@@ -46,7 +46,7 @@ test('PATCH /todo/:id', async t => {
   const todo = await Todo.create({ label: 'testLabel' });
   t.is(todo.complete, false);
 
-  const res = await request(app)
+  const res = await request(makeApp())
     .patch(`/todo/${todo.id}`)
     .send({ complete: true });
 
@@ -60,7 +60,7 @@ test('DELETE /todo/:id', async t => {
   const todo = await Todo.create({ label: 'testLabel' });
   t.not(todo, null);
 
-  const res = await request(app).delete(`/todo/${todo.id}`);
+  const res = await request(makeApp()).delete(`/todo/${todo.id}`);
 
   t.is(res.status, 200);
   t.is(res.body.result, 1);
