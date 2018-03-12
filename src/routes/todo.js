@@ -19,12 +19,12 @@ todoRouter.get('/:id', async (req, res) => {
     res.status(404).json({
       result: null,
       errors: `Record with id: ${req.params.id} not found.`
-    })
+    });
   } else {
     res.status(200).json({
       result,
       errors: null
-    })
+    });
   }
 });
 

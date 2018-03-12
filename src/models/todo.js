@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     label: DataTypes.STRING,
     complete: DataTypes.BOOLEAN
   }, {});
-  Todo.associate = function(models) {
+  Todo.associate = function() {
     // associations can be defined here
   };
 

@@ -1,5 +1,5 @@
 // environment variables in .env
-require('dotenv').config()
+require('dotenv').config();
 
 // package requirements
 const express = require('express');

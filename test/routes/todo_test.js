@@ -6,15 +6,12 @@ require('dotenv').config();
 // did not work as I expected.
 import { serial as test } from 'ava';
 const uuid = require('uuid');
-const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('supertest');
-const Sequelize = require('sequelize');
 
 const app = require('../../src');
 app.use(bodyParser.json());
 const { Todo } = require('../../src/models');
-const todoController = require('../../src/controllers/todo');
 
 // Integration tests below ==--------------------------------
 test('GET /todo', async t => {
