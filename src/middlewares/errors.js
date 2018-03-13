@@ -4,13 +4,9 @@ const errorsMiddleware = (err, req, res, next) => {
       result: null,
       errors: `SequelizeDatabaseError: ${err.message}`
     });
-  } else if (err) {
-    return res.status(500).json({
-      result: null,
-      errors: `Unspecified Error occurred: ${err.message}`
-    });
   }
 
+  res.status(500);
   next(err);
 };
 

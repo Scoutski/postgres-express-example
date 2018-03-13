@@ -7,6 +7,7 @@ const express = require('express');
 
 const { healthHandler } = require('../src/index');
 const todoRouter = require('../src/routes/todo');
+const errorsMiddleware = require('../src/middlewares/errors');
 
 // Following the endpoint recipe found here:
 // https://github.com/avajs/ava/blob/master/docs/recipes/endpoint-testing.md
@@ -15,6 +16,7 @@ function makeApp() {
   app.use(bodyParser.json());
   app.use('/health', healthHandler);
   app.use('/todo', todoRouter);
+  app.use(errorsMiddleware);
 
   return app;
 }

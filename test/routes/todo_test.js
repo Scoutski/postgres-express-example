@@ -35,6 +35,15 @@ test('GET /todo/:id', async t => {
   t.is(res.body.result.id, todo.id);
 });
 
+test('GET /todo/:id with a bad ID', async t => {
+  t.plan(2);
+
+  const res = await request(makeApp()).get(`/todo/${uuidv4()}`);
+
+  t.is(res.status, 422);
+  t.is(res.body.errors.includes('SequelizeDatabaseError'), true);
+});
+
 test('POST /todo', async t => {
   t.plan(2);
 
