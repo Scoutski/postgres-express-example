@@ -7,7 +7,6 @@ test('catchAsyncErrors ignores an incomplete function that doesnt throw', t => {
 
   const fn = () => { return {}; };
   const wrappedFn = catchAsyncErrors(fn);
-  console.log('wrappedFn:', wrappedFn);
   const result = wrappedFn();
 
   t.is(result, undefined);
