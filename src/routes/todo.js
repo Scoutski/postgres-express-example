@@ -1,20 +1,21 @@
 const { Router } = require('express');
 const controller = require('../controllers/todo');
 const errors = require('../lib/errors');
+const catchAsyncErrors = require('../lib/catchAsyncErrors');
 
 // Every route in this file is
 // automatically nested under /todo
 const todoRouter = new Router();
 
-todoRouter.get('', async (req, res) => {
+todoRouter.get('', catchAsyncErrors(async (req, res) => {
   const result = await controller.getAll();
   res.status(200).json({
     result: result.map(r => r.toJSON()),
     errors: null
   });
-});
+}));
 
-todoRouter.get('/:id', async (req, res) => {
+todoRouter.get('/:id', catchAsyncErrors(async (req, res) => {
   const result = await controller.get(req.params.id);
   if (result === null) {
     res.status(404).json({
@@ -27,9 +28,9 @@ todoRouter.get('/:id', async (req, res) => {
       errors: null
     });
   }
-});
+}));
 
-todoRouter.post('', async (req, res) => {
+todoRouter.post('', catchAsyncErrors(async (req, res) => {
   if (!req.body.label) {
     res.status(400).json({
       result: null,
@@ -42,9 +43,9 @@ todoRouter.post('', async (req, res) => {
       errors: null
     });
   }
-});
+}));
 
-todoRouter.patch('/:id', async (req, res) => {
+todoRouter.patch('/:id', catchAsyncErrors(async (req, res) => {
   if (req.body.label === undefined && req.body.complete === undefined) {
     res.status(400).json({
       result: null,
@@ -57,14 +58,14 @@ todoRouter.patch('/:id', async (req, res) => {
       errors: null
     });
   }
-});
+}));
 
-todoRouter.delete('/:id', async (req, res) => {
+todoRouter.delete('/:id', catchAsyncErrors(async (req, res) => {
   const result = await controller.destroy(req.params.id);
   res.status(200).json({
     result,
     errors: null
   });
-});
+}));
 
 module.exports = todoRouter;

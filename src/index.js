@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 
 // relative requirements
 const todoRouter = require('./routes/todo');
+const errorsMiddleware = require('./middlewares/errors');
 
 const app = express();
 
@@ -21,6 +22,7 @@ const healthHandler = (req, res) => {
 
 app.get('/health', healthHandler);
 app.use('/todo', todoRouter);
+app.use(errorsMiddleware);
 
 module.exports = {
   healthHandler,
